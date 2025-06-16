@@ -2,7 +2,7 @@ import { Colors } from "@/constants/Colors";
 import { useSSO } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { useNavigation, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useCallback } from "react";
 import {
   ScrollView,
@@ -68,7 +68,7 @@ export default function LoginScreen() {
     handleLogin(LoginStrategy.GOOGLE);
   }, [handleLogin]);
   const handleNavigateToSwitchAccount = useCallback(() => {
-    navigate.replace({ pathname: "/create" });
+    navigate.replace("/create");
   }, [navigate]);
   return (
     <View style={styles.container}>

@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, Tabs } from "expo-router";
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
+import * as Haptics from "expo-haptics";
 
 const Layout = () => {
   const { signOut } = useAuth();
@@ -44,7 +45,7 @@ const Layout = () => {
       <Tabs.Screen
         name="create"
         options={{
-          headerShown: false,
+          headerShown: true,
           title: "Create",
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
@@ -57,7 +58,7 @@ const Layout = () => {
         listeners={{
           tabPress: (e) => {
             e.preventDefault();
-            // Haptics.selectionAsync();
+            Haptics.selectionAsync();
             router.push("/(auth)/(modal)/create");
           },
         }}
@@ -81,6 +82,12 @@ const Layout = () => {
         options={{
           headerShown: false,
           title: "Profile",
+          headerTitleAlign: "center",
+          headerRight: () => (
+            <TouchableOpacity onPress={() => signOut()}>
+              <Ionicons name="log-out" size={24} color={"#000"} />
+            </TouchableOpacity>
+          ),
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
               name={focused ? "person" : "person-outline"}
@@ -98,9 +105,4 @@ const Layout = () => {
     </Tabs>
   );
 };
-const styles = StyleSheet.create({
-  logoutIcon: {
-    marginRight: 10,
-  },
-});
 export default Layout;
