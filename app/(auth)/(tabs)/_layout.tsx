@@ -1,9 +1,11 @@
+import { useAuth } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
 const Layout = () => {
+  const { signOut } = useAuth();
   return (
     <Tabs
       screenOptions={{
@@ -52,6 +54,13 @@ const Layout = () => {
             />
           ),
         }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            // Haptics.selectionAsync();
+            router.push("/(auth)/(modal)/create");
+          },
+        }}
       />
       <Tabs.Screen
         name="favorites"
@@ -79,15 +88,19 @@ const Layout = () => {
               color={color}
             />
           ),
+          // headerRight: () => (
+          //   <TouchableOpacity onPress={() => signOut()}>
+          //     <Ionicons style={styles.logoutIcon} name="log-out" size={24} />
+          //   </TouchableOpacity>
+          // ),
         }}
       />
     </Tabs>
   );
 };
 const styles = StyleSheet.create({
-  logoutText: {
+  logoutIcon: {
     marginRight: 10,
-    color: "blue",
   },
 });
 export default Layout;

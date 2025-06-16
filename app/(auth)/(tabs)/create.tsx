@@ -1,14 +1,26 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { router } from "expo-router";
+import React, { useEffect } from "react";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 
-const Page = () => {
+const CreateRedirectPage = () => {
+  useEffect(() => {
+    // Điều hướng đến modal create khi component được mount
+    router.navigate("/(auth)/(modal)/create");
+  }, []);
+
   return (
-    <View>
-      <Text>Page</Text>
+    <View style={styles.container}>
+      <ActivityIndicator size="large" />
     </View>
   );
 };
 
-export default Page;
+export default CreateRedirectPage;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

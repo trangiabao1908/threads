@@ -1,3 +1,4 @@
+import { useUserProfile } from "@/hooks/useUserProfile";
 import { ClerkLoaded, ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import {
@@ -8,7 +9,7 @@ import {
 } from "@expo-google-fonts/dm-sans";
 import { ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
-import { Slot } from "expo-router";
+import { Slot, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { LogBox } from "react-native";
@@ -33,6 +34,10 @@ if (!clerkPublishableKey) {
 SplashScreen.preventAutoHideAsync();
 
 const InitialLayout = () => {
+  const { isLoaded, isSignedIn } = useAuth();
+
+  const router = useRouter();
+  const segments = useSegments();
   const [fontsLoaded] = useFonts({
     DMSans_400Regular,
     DMSans_500Medium,
@@ -43,6 +48,16 @@ const InitialLayout = () => {
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
+  useEffect(() => {
+    if (!isLoaded) return;
+    const isAuthRoute = segments[0] === "(auth)";
+    if (isSignedIn && !isAuthRoute) {
+      router.replace("/(auth)/(tabs)/feed");
+    } else if (!isSignedIn && isAuthRoute) {
+      router.replace("/(public)");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSignedIn]);
   return <Slot />;
 };
 export default function RootLayout() {
