@@ -76,14 +76,15 @@ const InitialLayout = () => {
   }, [fontsLoaded]);
   useEffect(() => {
     if (!isLoaded) return;
+
     const isAuthRoute = segments[0] === "(auth)";
+
     if (isSignedIn && !isAuthRoute) {
       router.replace("/(auth)/(tabs)/feed");
     } else if (!isSignedIn && isAuthRoute) {
       router.replace("/(public)");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSignedIn]);
+  }, [isSignedIn, isLoaded, segments, router]);
 
   // Set the user in Sentry for better error tracking
   useEffect(() => {

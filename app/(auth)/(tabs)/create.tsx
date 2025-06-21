@@ -4,7 +4,6 @@ import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 const CreateRedirectPage = () => {
   useEffect(() => {
-    // Điều hướng đến modal create khi component được mount
     router.navigate("/(auth)/(modal)/create");
   }, []);
 

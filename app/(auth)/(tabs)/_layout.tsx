@@ -1,9 +1,9 @@
 import { useAuth } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
+import * as Haptics from "expo-haptics";
 import { router, Tabs } from "expo-router";
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
-import * as Haptics from "expo-haptics";
+import { TouchableOpacity } from "react-native";
 
 const Layout = () => {
   const { signOut } = useAuth();

@@ -4,6 +4,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { useQuery } from "convex/react";
 import { Image } from "expo-image";
+import { Link } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -46,9 +47,14 @@ const ProfileInfo = ({ userId }: ProfileInfoProps) => {
       <View style={styles.ButtonRow}>
         {isCurrentUser ? (
           <>
-            <TouchableOpacity style={styles.profileButton} onPress={() => {}}>
-              <Text style={styles.profileText}>Edit Profile</Text>
-            </TouchableOpacity>
+            <Link
+              href={`/(auth)/(modal)/edit-profile?userId=${userProfile?._id}&bio=${userInfo?.bio}&imageUrl=${userInfo?.imageUrl ? encodeURIComponent(userInfo?.imageUrl) : ""}&username=${userInfo?.username}&websiteUrl=${userInfo?.websiteUrl ? encodeURIComponent(userInfo?.websiteUrl) : ""}`}
+              asChild
+            >
+              <TouchableOpacity style={styles.profileButton} onPress={() => {}}>
+                <Text style={styles.profileText}>Edit Profile</Text>
+              </TouchableOpacity>
+            </Link>
             <TouchableOpacity style={styles.profileButton} onPress={() => {}}>
               <Text style={styles.profileText}>Share Profile</Text>
             </TouchableOpacity>
@@ -58,8 +64,8 @@ const ProfileInfo = ({ userId }: ProfileInfoProps) => {
             <TouchableOpacity style={styles.fullButton}>
               <Text style={styles.fullButtonText}>Follow</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.profileButton}>
-              <Text style={styles.profileText}>Mention</Text>
+            <TouchableOpacity style={styles.fullButton}>
+              <Text style={styles.fullButtonText}>Mention</Text>
             </TouchableOpacity>
           </>
         )}

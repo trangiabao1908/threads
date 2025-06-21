@@ -4,6 +4,7 @@ import { useQuery } from "convex/react";
 
 export const useUserProfile = () => {
   const { user } = useUser();
+
   const userProfile = useQuery(api.user.getUserByCLerkId, {
     clerkId: user?.id,
   });

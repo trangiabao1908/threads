@@ -1,15 +1,16 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import React from "react";
-import { Platform, TouchableOpacity } from "react-native";
+import { Platform, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 const Layout = () => {
+  const router = useRouter();
   return (
     <Stack
       screenOptions={{
         headerShadowVisible: false,
         contentStyle: { backgroundColor: "#fff" },
-        gestureEnabled: true, // Bật cử chỉ vuốt để đóng modal
+        gestureEnabled: true,
       }}
     >
       <Stack.Screen
@@ -38,8 +39,31 @@ const Layout = () => {
           gestureEnabled: true, // Cho phép vuốt để đóng modal
         }}
       />
+
+      <Stack.Screen
+        name="(modal)/edit-profile"
+        options={{
+          presentation: "modal",
+          title: "Edit Profile",
+          headerTitleAlign: "center",
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.dismiss()}>
+              <Text style={styles.buttonCancel}>Cancel</Text>
+            </TouchableOpacity>
+          ),
+          animation:
+            Platform.OS === "android" ? "slide_from_bottom" : undefined, // Thêm animation cho Android
+          gestureEnabled: true, // Cho phép vuốt để đóng modal
+        }}
+      />
     </Stack>
   );
 };
+const styles = StyleSheet.create({
+  buttonCancel: {
+    fontSize: 16,
+    color: "black",
+  },
+});
 
 export default Layout;

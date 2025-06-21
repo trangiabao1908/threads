@@ -1,12 +1,11 @@
-import React, { Fragment, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import { useAuth } from "@clerk/clerk-expo";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { ProfileProps } from "@/types/user";
+import { useAuth } from "@clerk/clerk-expo";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import React, { Fragment, useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ProfileInfo from "./ProfileInfo";
-import Profile from "./Profile";
 import ProfileTabs, { TabOptions } from "./ProfileTabs";
 
 type ProfileHeaderProps = ProfileProps;
@@ -40,8 +39,10 @@ const ProfileHeader = ({
           </TouchableOpacity>
         </View>
       </View>
-      {(userId || userProfile?._id) && (
-        <ProfileInfo userId={userId || userProfile?._id} />
+      {userId ? (
+        <ProfileInfo userId={userId} />
+      ) : (
+        userProfile?._id && <ProfileInfo userId={userProfile?._id} />
       )}
       <ProfileTabs
         activeTab={activeTab}
@@ -51,7 +52,6 @@ const ProfileHeader = ({
   );
 };
 
-// Sử dụng React.memo để tránh re-render không cần thiết
 export default React.memo(ProfileHeader);
 
 const styles = StyleSheet.create({
@@ -75,5 +75,12 @@ const styles = StyleSheet.create({
   backText: {
     fontSize: 16,
     color: "black",
+  },
+  loadingContainer: {
+    paddingVertical: 35,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+    margin: 16,
   },
 });

@@ -18,7 +18,7 @@ const Profile = ({ showBackButton = false, userId }: ProfileProps) => {
     <View style={[styles.container, { paddingTop: top }]}>
       <FlatList
         data={[]}
-        renderItem={({ item }) => null}
+        renderItem={() => null} // Placeholder for thread items
         ListEmptyComponent={<EmptyThreads />}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         ListHeaderComponent={headerComponent}
